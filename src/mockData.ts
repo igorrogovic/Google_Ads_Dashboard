@@ -6,7 +6,7 @@ export async function fetchCampaignsFromSheet(): Promise<Campaign[]> {
   // Format: https://docs.google.com/spreadsheets/d/SHEET_ID/export?format=csv
   // Or use the JSON feed: https://docs.google.com/spreadsheets/d/SHEET_ID/gviz/tq?tqx=out:json
   
-  const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID';
+  const SHEET_ID = '2PACX-1vT38NZsUT4crVOdQVSSRkSLn6vVwCDI4QSSQ5bGNN1mGPMlT3cWNd-I0LAMGONEQ-vl5s6O3krnPl4L';
   const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
   
   try {
