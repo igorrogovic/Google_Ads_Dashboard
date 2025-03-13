@@ -1,6 +1,44 @@
 import { Campaign } from './types';
-import { addDays, format } from 'date-fns';
 
+// Function to fetch data from a published Google Sheet
+export async function fetchCampaignsFromSheet(): Promise<Campaign[]> {
+  // Google Sheets must be published to the web as CSV or JSON
+  // Format: https://docs.google.com/spreadsheets/d/SHEET_ID/export?format=csv
+  // Or use the JSON feed: https://docs.google.com/spreadsheets/d/SHEET_ID/gviz/tq?tqx=out:json
+  
+  const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID';
+  const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+  
+  try {
+    const response = await fetch(SHEET_URL);
+    const text = await response.text();
+    
+    // Google's JSON response has some extra characters we need to remove
+    const jsonData = JSON.parse(text.substring(47).slice(0, -2));
+    
+    // Transform the Google Sheets data into Campaign objects
+    const campaigns: Campaign[] = jsonData.table.rows.map((row: any, index: number) => {
+      const cells = row.c;
+      
+      // Assuming your sheet has columns: id, name, type, isBrand, metrics (as JSON string)
+      return {
+        id: cells[0]?.v?.toString() || `${index}`,
+        name: cells[1]?.v?.toString() || '',
+        type: cells[2]?.v?.toString() || 'search',
+        isBrand: cells[3]?.v === 'true' || cells[3]?.v === true,
+        metrics: cells[4]?.v ? JSON.parse(cells[4]?.v) : []
+      };
+    });
+    
+    return campaigns;
+  } catch (error) {
+    console.error('Error fetching data from Google Sheet:', error);
+    // Fallback to mock data if fetch fails
+    return mockCampaigns;
+  }
+}
+
+// Keep the mock data as fallback
 const generateMetrics = (days: number) => {
   return Array.from({ length: days }).map((_, index) => ({
     date: format(addDays(new Date('2024-01-01'), index), 'yyyy-MM-dd'),
@@ -40,6 +78,13 @@ export const mockCampaigns: Campaign[] = [
     id: '4',
     name: 'Shopping Campaign',
     type: 'shopping',
+    isBrand: false,
+    metrics: generateMetrics(90),
+  },
+  {
+    id: '5',
+    name: 'Performance Max Campaign',
+    type: 'performance-max',
     isBrand: false,
     metrics: generateMetrics(90),
   },
