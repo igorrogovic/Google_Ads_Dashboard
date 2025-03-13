@@ -27,12 +27,10 @@ export function Filters({
           onChange={(e) => setCampaignType(e.target.value as CampaignType)}
           className="border rounded-md px-3 py-1.5 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          <option value="all">All</option>
           <option value="search">Search</option>
           <option value="display">Display</option>
           <option value="shopping">Shopping</option>
           <option value="video">Video</option>
-          <option value="performance-max">Performance Max</option>
         </select>
       </div>
 
