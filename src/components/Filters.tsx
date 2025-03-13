@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { CampaignType, BrandType, TimeRange } from '../types';
 
 interface FiltersProps {
@@ -8,10 +8,10 @@ interface FiltersProps {
   setBrandType: (type: BrandType) => void;
   timeRange: TimeRange;
   setTimeRange: (range: TimeRange) => void;
-  startDate: Date;
-  setStartDate: (date: Date) => void;
-  endDate: Date;
-  setEndDate: (date: Date) => void;
+  startDate: string; // Changed to string
+  setStartDate: (date: string) => void;
+  endDate: string; // Changed to string
+  setEndDate: (date: string) => void;
 }
 
 export function Filters({
@@ -28,6 +28,7 @@ export function Filters({
 }: FiltersProps) {
   return (
     <div className="flex flex-wrap gap-4 p-4 bg-white rounded-lg shadow-sm">
+      {/* Existing filters */}
       <div className="flex flex-col">
         <label className="text-sm font-medium text-gray-700 mb-1">Campaign Type</label>
         <select
@@ -68,12 +69,13 @@ export function Filters({
         </select>
       </div>
       
+      {/* Date range selectors */}
       <div className="flex flex-col">
         <label className="text-sm font-medium text-gray-700 mb-1">Start Date</label>
         <input
           type="date"
-          value={startDate.toISOString().split('T')[0]}
-          onChange={(e) => setStartDate(new Date(e.target.value))}
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
           className="border rounded-md px-3 py-1.5 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
@@ -82,8 +84,8 @@ export function Filters({
         <label className="text-sm font-medium text-gray-700 mb-1">End Date</label>
         <input
           type="date"
-          value={endDate.toISOString().split('T')[0]}
-          onChange={(e) => setEndDate(new Date(e.target.value))}
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
           className="border rounded-md px-3 py-1.5 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
