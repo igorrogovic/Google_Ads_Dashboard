@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CampaignType, BrandType, TimeRange } from '../types';
 
 interface FiltersProps {
@@ -8,6 +8,10 @@ interface FiltersProps {
   setBrandType: (type: BrandType) => void;
   timeRange: TimeRange;
   setTimeRange: (range: TimeRange) => void;
+  startDate: Date;
+  setStartDate: (date: Date) => void;
+  endDate: Date;
+  setEndDate: (date: Date) => void;
 }
 
 export function Filters({
@@ -17,6 +21,10 @@ export function Filters({
   setBrandType,
   timeRange,
   setTimeRange,
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
 }: FiltersProps) {
   return (
     <div className="flex flex-wrap gap-4 p-4 bg-white rounded-lg shadow-sm">
@@ -58,6 +66,26 @@ export function Filters({
           <option value="weekly">Weekly</option>
           <option value="monthly">Monthly</option>
         </select>
+      </div>
+      
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-700 mb-1">Start Date</label>
+        <input
+          type="date"
+          value={startDate.toISOString().split('T')[0]}
+          onChange={(e) => setStartDate(new Date(e.target.value))}
+          className="border rounded-md px-3 py-1.5 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+      
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-700 mb-1">End Date</label>
+        <input
+          type="date"
+          value={endDate.toISOString().split('T')[0]}
+          onChange={(e) => setEndDate(new Date(e.target.value))}
+          className="border rounded-md px-3 py-1.5 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
       </div>
     </div>
   );
