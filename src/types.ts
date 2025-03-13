@@ -1,5 +1,5 @@
 export type TimeRange = 'daily' | 'weekly' | 'monthly';
-export type CampaignType = 'search' | 'display' | 'shopping' | 'video' | 'performance max' | 'all' ;
+export type CampaignType = 'search' | 'display' | 'shopping' | 'video' | 'performance max' | 'all';
 export type BrandType = 'brand' | 'non-brand' | 'all';
 
 export interface Campaign {
